@@ -1,0 +1,415 @@
+/* =============================== GLOBAL ================================== */
+:root {
+    --controlPanelSize: 450px;
+    --iconHeight: 50px;
+    --marginTopIcon: 10px;
+    --topBannerHeight: calc(var(--iconHeight) + 2 * var(--marginTopIcon));
+    
+    --buttonFontSizePC: 1.3rem;
+    --buttonFontSizeTEL: 1.1rem;
+
+    --yellowColorTN: rgba(249, 187, 18);
+    --greenColorTN: rgba(0, 161, 154);
+    --blueColorTN: rgba(36, 161, 235);
+    --navyColorTN: rgba(26, 24, 45);
+    
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./Poppins/Poppins-Black.ttf') format('truetype'),
+        url('./Poppins/Poppins-BlackItalic.ttf') format('truetype'),
+        url('./Poppins/Poppins-Bold.ttf') format('truetype'),
+        url('./Poppins/Poppins-BoldItalic.ttf') format('truetype'),
+        url('./Poppins/Poppins-ExtraBold.ttf') format('truetype'),
+        url('./Poppins/Poppins-ExtraBoldItalic.ttf') format('truetype'),
+        url('./Poppins/Poppins-ExtraLight.ttf') format('truetype'),
+        url('./Poppins/Poppins-ExtraLightItalic.ttf') format('truetype'),
+        url('./Poppins/Poppins-Italic.ttf') format('truetype'),
+        url('./Poppins/Poppins-Light.ttf') format('truetype'),
+        url('./Poppins/Poppins-LightItalic.ttf') format('truetype'),
+        url('./Poppins/Poppins-Medium.ttf') format('truetype'),
+        url('./Poppins/Poppins-MediumItalic.ttf') format('truetype'),
+        url('./Poppins/Poppins-Regular.ttf') format('truetype'),
+        url('./Poppins/Poppins-SemiBold.ttf') format('truetype'),
+        url('./Poppins/Poppins-SemiBoldItalic.ttf') format('truetype'),
+        url('./Poppins/Poppins-Thin.ttf') format('truetype'),
+        url('./Poppins/Poppins-ThinItalic.ttf') format('truetype');
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    /* overflow: hidden; */
+    display: flex;
+    flex: auto;
+    background-image: url("./../img/background/ground3.jpg");
+    /* height :100%; */
+}
+
+button {
+    background-color: var(--blueColorTN);
+    color: white;
+    border: var(--navyColorTN);
+    border-radius: 5px;
+    padding: 5px;
+    transition: background-color 0.3s; /* Ajouter une transition d'une seconde pour la couleur de fond */
+  }
+  
+button:hover {
+    background-color: var(--navyColorTN); /* Changer la couleur de fond lorsqu'on survole le bouton */
+}
+  
+
+/* ========================== PLAY PANEL =======================================*/
+#playPanel {
+    height: 100vh;
+    /* width: calc(100% - (var(--controlPanelSize)) ); */
+    width: 100%;
+}
+
+
+/* traces les autres chemins */
+canvas:not(#curve) {
+    position: absolute;
+}
+
+
+/*=========================== ICON DIV =====================================  */
+#iconDiv {
+    display: flex;
+    position: absolute;
+    /* Over the playPanel */
+    z-index: 2; 
+    height: calc(var(--topBannerHeight));
+    width: 100%;
+    background-color: var(--navyColorTN);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color: white;
+
+    /* TODO : bouger ce align item qui fait quer les drop down sont aussi aligné */
+    /* Centrer les éléments horizontalement */
+    align-items: center; 
+}
+
+
+/* Réinitialiser le style par défaut des boutons */
+label.iconBar-button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: white;
+    font-size: var(--buttonFontSizePC);
+    height: fit-content;
+}
+
+input.iconBar-button {
+    display: none;
+}
+
+.iconBar-button{
+    transition: color 0.2s;
+}
+
+
+.iconBar-button:hover {
+    color: var(--blueColorTN) /* Couleur de votre choix pour les labels sélectionnés */;
+}
+
+/* Styles des labels lorsqu'ils sont cochés */
+.iconBar-button:checked + label.iconBar-button {
+    color: var(--yellowColorTN) /* Couleur de votre choix pour les labels sélectionnés */;
+    /* dark navy brigther */
+    /* background-color: rgba(52, 48, 90);  */
+    /* dark navy darker rgba(26, 24, 45) / 2*/ 
+    /* background-color: rgba(13, 12, 22);
+    border-color: rgba(26, 24, 45) ;
+    border-radius: 5px;
+    border: 0 5px; */
+
+}
+
+#iconDiv * {
+    cursor: pointer;
+}
+
+
+#iconDiv img {
+    height: var(--iconHeight);
+    width: auto;
+    margin: var(--marginTopIcon);
+}
+
+#iconDiv div > div {
+    margin: var(--marginTopIcon);
+}
+
+#iconDiv img:not(#menuButton, #bigTN, #miniTN) {
+    display: flex;
+}
+
+
+.dropdown-square{
+    align-self: flex-start;
+}
+
+    /* Permet de considéré la division comme la somme de ses items --> applique les super(flex) normalement */
+
+#iconBar-buttonDiv, #iconBar-vignetteDiv{
+    display: contents;
+    flex-direction: row;
+}
+
+
+
+/* par défaut : hidden */
+#menuButton,
+#miniTN {
+    display: none;
+}
+
+
+/* ========================== CONTROLE PANEL =======================================*/
+
+
+#controlPanel {
+    
+    width: var(--controlPanelSize);
+    top: var(--topBannerHeight);
+    left: calc(100% - var(--controlPanelSize));
+    background-color: white;
+    border-radius: 0 0 0 15px;
+    
+    /* Permet de l'afficher par dessus les fourmis si réduction */
+    position: absolute;
+    z-index: 1;
+    /* display: flex; */
+    flex-direction: column;
+    flex-grow: inherit;
+
+    /* Try TN border */
+    /* border-bottom: 5px solid;
+    border-left: 5px solid;
+    border-image: linear-gradient(to bottom right, var(--yellowColorTN), var(--greenColorTN), var(--blueColorTN)) 1; */
+}
+
+#controlPanel>div{
+    z-index: 0;
+}
+
+
+/* TOutes les divisions de #inputControler */
+#inputControler>div {
+    padding: 5px 0 5px 0;
+}
+
+/* ######## INPUT PANEL ######## */
+
+
+#inputControler {
+    padding: 10px 0 10px 0;
+    border-top: 1px solid var(--navyColorTN);
+    /* display: block; */
+    display: none;
+    flex-direction: column;
+}
+
+/* antControler */
+
+#antControler {
+    display: flex;
+    flex-direction: row;
+    /* Les deux colonnes label / range sont espacé horsitontalement */
+    justify-content: space-around;
+}
+
+#antControler>div {
+    display: flex;
+    flex-direction: column;
+    /* les lignes (label ou input) sont espacé verticalement */
+    justify-content: space-around;
+}
+
+/* button */
+#gameControler {
+    /* align les boutons avec espacements */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
+
+/* ######## EXPLANATION CONTROLER ######## */
+
+#explainationButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+
+/* Centered text */
+.buttonTexted {
+
+    /* button sous le texte */
+    position: relative;
+    /* Taille de la division = taille du panel / nb_bouton */
+    width: calc(75% / 3);
+    /* Au centre (need aussi le left:50% de h4 */
+    text-align: center;
+}
+
+.buttonTexted>h4 {
+    /* Texte par dessus le bouton */
+    position: absolute;
+    /* Au centre */
+    top: 50%;
+    left: 50%;
+    /* Position responsive */
+    transform: translate(-50%, -50%);
+    /* Font-size variable */
+    /* font-size: 0.8vw */
+    font-size: 10px;
+}
+
+.buttonTexted>img {
+    /* taille du bouton = taille du contenaire */
+    width: 75%;
+}
+
+/* Explanation TEXTE */
+
+#tutorial, #information, #more {
+    display: none;
+    text-align: justify;
+    margin: 0px 20px 0px 20px;
+}
+
+#dataViewer{
+    display: none;
+    min-height: 33vh;
+    border-top: 1px solid var(--navyColorTN);
+}
+
+
+
+/* QUatrième tab for curve */
+/* @media (min-width : 900px) {
+
+    
+    #tab4,
+    .tab-wrap>label:nth-child(8),
+    div.tab__content:nth-child(12) {
+        display: none;
+    }
+} */
+
+
+/* ==========================================================*/
+/* ========================= LITTLE SCREEN ==================*/
+/* ==========================================================*/
+
+@media (max-width : 900px) {
+
+    /* html,
+    body {
+        display: flex;
+        flex-direction: column;
+    } */
+
+    /*=========================== ICON DIV =====================================  */
+
+    /* Icon div est placé en absolue pour éviter de casser la positio des fourmies codé avec le cul */
+
+    #iconDiv {
+        
+        flex-direction: column;
+        /* position: absolute; */
+        width: 100%;
+        height: fit-content;
+       
+    }
+
+    #iconBar-buttonDiv, #iconBar-vignetteDiv{
+        /* Permet de considéré la division comme la somme de ses items --> applique les super(flex) normalement */
+        
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        
+    }
+
+    #iconBar-buttonDiv{
+        height: fit-content ;
+    }
+    #iconBar-vignetteDiv{
+        height: var(--topBannerHeight);
+    }
+    .iconBar-button{
+        font-size: var(--buttonFontSizeTEL);
+    }
+
+    #menuButton,
+    #miniTN {
+        display: flex;
+    }
+
+    #bigTN {
+        display: none;
+    }
+
+    /* ========================== PLAY =======================================*/
+    #playPanel {
+        /* height: 100vh; */
+        height: 100%;
+        width: 100%;
+    }
+
+
+
+    /* ========================== CONTROLE =======================================*/
+
+    #controlPanel {
+        /* position: absolute; */
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 0;
+
+        /* background-image: linear-gradient(rgba(249, 187, 18, 0.2), rgba(0, 161, 154, 0.2), rgba(36, 161, 235, 0.2)); */
+
+        display: none;
+        width: 100%;
+        /* height: 100% ; */
+        /* height: calc(100% - var(--iconHeight) - 2 * var(--marginTopIcon)); */
+        height: fit-content;
+
+        left: 0;
+        top: calc(var(--topBannerHeight) + var(--buttonFontSizeTEL) + 4px * 2  );
+
+    }
+
+
+    #dataViewer {
+        /* bien que le dataViewer n'est pas affiché, il détermine la taille du canvas curve */
+        height: 60%;
+        /* width: 90%; */
+
+        /* Warning : code déguelasse :
+           la division est littéralement caché en haut à gauche de l'écran
+         */
+        /* opacity: 0; */
+        /* position: absolute; */
+        /* top: 0; */
+        /* left: 0; */
+    }
+
+}

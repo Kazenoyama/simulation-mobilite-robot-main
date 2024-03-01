@@ -1,0 +1,71 @@
+#hamburger-container {
+  display: none;
+  align-items: center; /* Aligne les éléments enfants verticalement */
+  /* Ajoutez d'autres propriétés selon vos besoins */
+}
+
+.checkbox {
+  display: block;
+  /* height: 26px; 
+  width: 32px;  */
+  height: var(--iconHeight);
+  width: var(--iconHeight);
+  position: absolute; /* Permet de superposer l'input sur les lignes de hamburger */
+  z-index: 5;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.hamburger-lines {
+  height: 26px;
+  width: 32px;
+  position: relative; /* Ajout de position relative pour contenir les lignes de hamburger */
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger-lines .line {
+  display: block;
+  height: 4px;
+  width: 100%;
+  border-radius: 10px;
+  background: white;
+}
+
+.hamburger-lines .line1 {
+  transform-origin: 0% 0%;
+  transition: transform 0.4s ease-in-out;
+}
+
+ .hamburger-lines .line2 {
+  transition: transform 0.2s ease-in-out;
+}
+
+ .hamburger-lines .line3 {
+  transform-origin: 0% 100%;
+  transition: transform 0.4s ease-in-out;
+}
+
+
+ input[type="checkbox"]:checked ~ .hamburger-lines .line1 {
+  transform: rotate(45deg);
+}
+
+ input[type="checkbox"]:checked ~ .hamburger-lines .line2 {
+  transform: scaleY(0);
+}
+
+ input[type="checkbox"]:checked ~ .hamburger-lines .line3 {
+  transform: rotate(-45deg);
+}
+
+@media (max-width : 900px){
+  #hamburger-container {
+    display: flex;
+    align-items: center; /* Aligne les éléments enfants verticalement */
+    /* Ajoutez d'autres propriétés selon vos besoins */
+    
+  }
+}

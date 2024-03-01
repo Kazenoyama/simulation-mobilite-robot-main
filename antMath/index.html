@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<!-- <html lang="fr"> -->
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ant simulation : Math</title>
+  <link rel="icon" type="image/x-icon" href="./../favicon.png">
+  <!-- Parameters to import library -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <!-- Library  Graphique-->
+  <script type="text/javascript" src="./library/gif.js.optimized/dist/gif.js"></script>
+  <script type="text/javascript" src="library/chart.min.js"></script>
+  <script type="text/javascript" src="library/granim.min.js"></script>
+
+  <!-- My App -->
+  <script src="./js/Ant.js"></script>
+  <script src="./js/DrawingAnt.js"></script>
+  <script src="./js/DrawingApp.js"></script>
+  <!-- Script -->
+  <script src="./js/ImageTS.js"></script>
+  <script src="./js/curve.js"></script>
+  <script src="js/langSwitch.js"></script>
+  <script src="./js/KeyListener.js"></script>
+  <script src="./js/backGroundChange.js"></script>
+  <script src="./js/inputControler.js"></script>
+
+
+  <!-- Obstacle -->
+  <script src="./js/Obstacle.js"></script>
+  <script src="./js/ObstacleManager.js"></script>
+
+  <!-- New Type of ant -->
+  <script src="./js/DirectAnt.js"></script>
+
+  <!-- New Type of ant -->
+  <script src="./js/LesPoints.js"></script>
+  <script src="./js/Setup.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./css/antMath.css">
+  <link rel="stylesheet" href="./css/radioInput.css">
+
+  <link rel="stylesheet" href="./css/dropDownSelect.css">
+  <link rel="stylesheet" href="./css/hamburger.css">
+  <!-- <link rel="stylesheet" href="./css/rangeInput.css"> -->
+
+  <!-- <link rel="stylesheet" href="./css/checkBox.css"> -->
+
+</head>
+
+<body>
+
+
+
+  <!-- IconDiv -->
+  <div id="iconDiv">
+
+    <div id="iconBar-vignetteDiv">
+      <!-- Menu for Smartphone -->
+      <!-- <img src="img/icon/menu_boutton_opaque.png" alt="Menu button" id="menuButton" onclick="displayControlPanel()"> -->
+
+      <div id="hamburger-container">
+        <input class="checkbox" type="checkbox" name="" id="" onclick="displayControlPanel()" />
+        <div class="hamburger-lines">
+          <span class="line line1"></span>
+          <span class="line line2"></span>
+          <span class="line line3"></span>
+        </div>
+      </div>
+      
+      
+
+
+      <!-- <img src="../favicon.png" alt="Mini logo TerraNumerica" id="miniTN"> -->
+      <a href="https://terra-numerica.org/" target="_blank" id="bigTN"><img src="img/logoTN.png"
+          alt="Go to Terra Numerica"></a>
+
+      <!-- Drop-down : select background -->
+      <div class="dropdown-square" id="background-picker" title="background picker">
+        
+        <input type="radio" id="choiceBackgroundGrass" name="line-background-picker" title="Grass" value="grass" class="dropdown-input"
+         onclick="changeBackground(this)" checked="checked"/>
+         <!-- checked="checked"  -->
+        <label title="Grass" for="choiceBackgroundGrass"></label>
+
+        <input type="radio" id="choiceBackgroundSand" name="line-background-picker" title="Sand" value="sand" class="dropdown-input"
+          onclick="changeBackground(this)" />
+        <label title="Sand" for="choiceBackgroundSand"></label>
+
+        <input type="radio" id="choiceBackgroundDirt" name="line-background-picker" value="dirt" class="dropdown-input"
+          onclick="changeBackground(this)" />
+        <label title="Dirt" for="choiceBackgroundDirt"></label>
+
+        <input type="radio" id="choiceBackgroundPersonalized" name="line-background-picker" value="personalized" class="dropdown-input"
+          onclick="changeBackground(this)" />
+        <label title="Personalized" for="choiceBackgroundPersonalized"></label>
+        
+        <!-- Input hidden for choice file -->
+        <input style="display: none;" type="file" accept="image/*" id="backgroundPickerPersonalized"
+          oninput="onInputBackgroundInput(this)">
+      </div>
+
+      <!-- <img src="img/icon/translate_icon.jpeg" alt="translate" > -->
+
+      <div class="dropdown-square" id="lang-picker">
+        <input type="radio" id="choiceLangFR" name="line-lang-picker" value="fr" onclick="updateLanguage(this)">
+        <label title="Français" for="choiceLangFR">FR</label>
+        <!-- &#127467; -->
+        <input type="radio" id="choiceLangEN" name="line-lang-picker" value="en" onclick="updateLanguage(this)">
+        <label title="English" for="choiceLangEN">EN</label>
+        <!-- &#127466; -->
+      </div>
+
+
+      <!-- <img src="img/icon/background_icon.png" alt="change background"> -->
+      <!-- <img src="img/icon/changeBG1.png" alt="change background"> -->
+      <img src="img/icon/dowload_icon.jpeg" alt="Download GIF" onclick="createGIF(this)">
+      <!-- <img src="img/icon/reset_icon.jpeg" alt="Reset page" onclick="resetDraw(this)"> -->
+    </div>
+    
+
+
+    <!-- NEW CHOICE : ROW 2 -->
+    <div id="iconBar-buttonDiv">
+
+      <!-- <button name="tutorialTab" onclick="displayHideID('tutorial')" class="iconBar-button">
+        Tutoriel
+      </button>
+
+      <button name="informationTab" onclick="displayHideID('information')" class="iconBar-button">
+        Information
+      </button>
+
+      <button name="moreTab" onclick="displayHideID('more')" class="iconBar-button">
+        Plus
+      </button>
+
+      <button name="curveTab" onclick="displayHideID('dataViewer')" class="iconBar-button">
+        Graphique
+      </button> -->
+
+      <!-- Try version with checkbox instead of button -->
+
+      <!-- <input type="radio" id="choiceTutorial" name="line-iconBar-buttonDiv" value="tutorial" class="iconBar-button"
+        onclick="displayHideID('tutorial')"/>
+      <label title="Tutorial" for="choiceTutorial" class="iconBar-button" >Tutoriel</label>
+
+      <input type="radio" id="choiceInformation" name="line-iconBar-buttonDiv" value="information" class="iconBar-button"
+        onclick="displayHideID('information')" />
+      <label title="Information" for="choiceInformation" class="iconBar-button" >Information</label>
+      
+      <input type="radio" id="choiceMore" name="line-iconBar-buttonDiv" value="more" class="iconBar-button"
+        onclick="displayHideID('more')" />
+      <label title="More" for="choiceMore" class="iconBar-button">Plus</label>
+
+      <input type="radio" id="choiceCurve" name="line-iconBar-buttonDiv" value="curve" class="iconBar-button"
+        onclick="displayHideID('dataViewer')" />
+      <label title="Curve" for="choiceCurve" class="iconBar-button">Graphique</label> -->
+
+      <input type="checkbox" id="choiceTutorial" name="line-iconBar-buttonDiv" value="tutorial" class="iconBar-button"
+        onclick="displayHideID('tutorial')"/>
+      <label title="Tutorial" for="choiceTutorial" class="iconBar-button" >Tutoriel</label>
+
+      <input type="checkbox" id="choiceInformation" name="line-iconBar-buttonDiv" value="information" class="iconBar-button"
+        onclick="displayHideID('information')" />
+      <label title="Information" for="choiceInformation" class="iconBar-button" >M&eacute;diation</label>
+  
+
+      <input type="checkbox" id="choiceCurve" name="line-iconBar-buttonDiv" value="curve" class="iconBar-button"
+        onclick="displayHideID('dataViewer') ; displayHideID('inputControler')" />
+      <label title="Curve" for="choiceCurve" class="iconBar-button">Contr&#xF4;le</label>
+
+
+    </div>
+
+    <!-- <button name="cursorTab" onclick="displayHideID('inputControler')">
+      Curseurs
+    </button> -->
+
+  </div>
+
+  <!-- CONTROL PANEL -->
+  <div id="controlPanel">
+
+    <!-- EXPLANATION PANEL -->
+
+
+    <div includeHTML="tutorial.html" id="tutorial"></div>
+    <div includeHTML="controlPanel.html" id="information"></div>
+    <div includeHTML="more.html" id="more"></div>
+
+    <!-- INPUT PANEL -->
+    <div id="inputControler">
+
+      <!-- Slider -->
+      <div id="antControler">
+        <!-- Label -->
+        <div>
+          <label id="antSpeedLabel" for="antSpeed" lang="en">Ant Speed</label>
+          <label lang="en" id="antSpacingLabel" for="antSpacing">Ant Spacing</label>
+          <label lang="en" id="antPathLabel" for="pathDrawing">Ant path selected</label>
+          <label lang="en" id="obstacleSizeLabel" for="obstacleSize">Obstacle size</label>
+          <label lang="en" id="obstacleRandomPosLabel" for="obstacleRandomPos">Obstacle random position</label>
+          <label lang="en" id="obstacleRandomSizeLabel" for="obstacleRandomSize">Obstacle random size</label>
+        </div>
+        <!-- Input range -->
+        <div>
+          <input type="range" id="antSpeed" name="antSpeed" min="1" max="10" value="5" step="1"
+            oninput="changeAntSpeed(this)">
+          <input type="range" id="antSpacing" name="antSpacing" min="30" max="90" value="30" step="30"
+            oninput="changeAntSpacing(this)">
+          <input type="range" id="pathDrawing" name="pathDrawing" min="-1" max="-1" value="-1" step="1"
+            oninput="drawPath(this)">
+          <input type="range" id="obstacleSize" name="obstacleSize" min="25" max="250" value="75" step="5">
+          <input type="checkBox" id="obstacleRandomPos" value="0">
+          <input type="checkBox" id="obstacleRandomSize" value="0">
+        </div>
+
+      </div>
+
+      <!-- Button -->
+      <div id="gameControler">
+        <!-- TODO : Trouver une solution pour la traduction -->
+        <button lang="en" id="stopButton" class="controlButton" onclick="pauseDraw(this)">Stop</button>
+        
+        <!-- <button class="controlButton" onclick="createGIF(this)">GIF</button> -->
+        <button lang="en" id="resetButton" class="controlButton" onclick="resetDraw(this)">Reset</button>
+        <button lang="en" id="allPathButton" class="controlButton" onclick="drawMainPaths(this)">All Path</button>
+        <button lang="en" id="addObstacle" class="controlButton">Add obstacle</button>
+        <button lang="en" id="removeObstacle" class="controlButton">Remove obstacle</button>
+
+      </div>
+
+    </div>
+
+    <!-- CURVE PANEL -->
+    <div id="dataViewer">
+      <canvas lang="en" id="curve"></canvas>
+    </div>
+
+  </div>
+
+  <!-- PLAYGROUND -->
+  <div id="playPanel">
+    <canvas id="playGround"></canvas>
+  </div>
+
+  <div id="obstacleContainer"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+:root{
+    --nbLangChoice: 2;
+    --nbBGChoice: 4;
+}
+
+.dropdown-square{
+    z-index: 999;
+}
+
+
+
+.dropdown-square {
+    /*style the "box" in its minimzed state*/
+    background-color: var(--navyColorTN);
+    text-align: center;
+    border:1px solid white;
+     width:var(--iconHeight); 
+     height:var(--iconHeight); 
+    overflow:hidden;
+    /*animate the dropdown collapsing*/
+    transition: height 0.1s;
+    /* Over the iconDiv */
+    
+}
+.dropdown-square:hover {
+    /*when expanded, the dropdown will get native means of scrolling*/
+    /* height:200px;  */
+    /* overflow-y:scroll; */
+    /*animate the dropdown expanding*/
+    transition: height 0.5s;
+    ;
+}
+
+#background-picker:hover{height: calc(var(--nbBGChoice) * var(--iconHeight));}
+#lang-picker:hover{height: calc(var(--nbLangChoice) * var(--iconHeight));}
+
+.dropdown-square input {
+    /*hide the nasty default radio buttons!*/
+
+    position:absolute;top:0;left:0;opacity:0;
+    
+}
+.dropdown-square label {
+    /*style the labels to look like dropdown options*/
+    /* display:none; */
+    display: block;
+    margin:2px;
+    /* height:46px;  */
+    height:calc(var(--iconHeight) - 2px);
+    /* opacity:0.2;  */
+    /* background-image: url("../img/icon/changeBG1.png"); */
+    /* background-image:url("../img/background/ground.jpg"); */
+    background-size:contain;
+
+    color: var(--blueColorTN);
+    font-size: 2.1em;
+}
+
+
+
+.dropdown-square:hover label{
+    /*this is how labels render in the "expanded" state.
+     we want to see only the selected radio button in the collapsed menu,
+     and all of them when expanded*/
+    display:block;
+    
+    
+}
+
+
+.dropdown-square input:checked + label {
+    /*tricky! labels immediately following a checked radio button
+      (with our markup they are semantically related) should be fully opaque
+      and visible even in the collapsed menu*/
+    opacity:1 !important; display:block;
+}
+
+/* .dropdown-input{
+    height: 0;
+    width: 0;
+} */
+
+
+label[for=choiceBackgroundGrass] {background-image:url("../img/background/ground3.jpg");}
+label[for=choiceBackgroundSand] {background-image:url("../img/background/ground2.jpg");}
+label[for=choiceBackgroundDirt] {background-image:url("../img/background/ground.jpg");}
+label[for=choiceBackgroundPersonalized] {background-image:url("../img/icon/changeBG1.png");}
+
+
